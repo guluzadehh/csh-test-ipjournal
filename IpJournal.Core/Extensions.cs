@@ -4,23 +4,30 @@ namespace IpJournal.Core;
 
 public static class Extensions
 {
-    public static uint ToInteger(this IPAddress ipAddress)
+    public static int Compare(this IPAddress ipAddress1, IPAddress ipAddress2)
     {
-        byte[] bytes = ipAddress.GetAddressBytes();
+        if (ipAddress1 == null && ipAddress2 == null)
+            return 0;
 
-        if (BitConverter.IsLittleEndian)
+        if (ipAddress1 == null)
+            return -1;
+
+        if (ipAddress2 == null)
+            return 1;
+
+        byte[] addressBytes1 = ipAddress1.GetAddressBytes();
+        byte[] addressBytes2 = ipAddress2.GetAddressBytes();
+
+        for (int i = 0; i < addressBytes1.Length; i++)
         {
-            Array.Reverse(bytes);
+            if (addressBytes1[i] < addressBytes2[i])
+                return -1;
+
+            else if (addressBytes1[i] > addressBytes2[i])
+                return 1;
         }
 
-        return BitConverter.ToUInt32(bytes, 0);
-    }
-
-    public static uint Compare(this IPAddress ipAddress1, IPAddress ipAddress2)
-    {
-        uint ip1 = ipAddress1.ToInteger();
-        uint ip2 = ipAddress2.ToInteger();
-        return ((ip1 - ip2) >> 0x1F) | (uint)(-(ip1 - ip2)) >> 0x1F;
+        return 0;
     }
 
     public static bool IsInSubnet(this IPAddress ipAddress, IPAddress subnetAddress, int subnetMaskLength)
