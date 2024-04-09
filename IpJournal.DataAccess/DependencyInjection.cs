@@ -9,7 +9,7 @@ public static class DependencyInjection
     public static IServiceCollection AddDatatAccess(this IServiceCollection services)
     {
         services.AddSingleton<IRequestLogsRepository, RequestLogsFileRepository>();
-        services.AddSingleton<IIPAddressRepository, IPAdressFileRepository>();
+        services.AddSingleton<IIPAddressRepository, IPAddressFileRepository>();
 
         return services;
     }

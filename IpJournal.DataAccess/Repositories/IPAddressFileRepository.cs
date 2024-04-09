@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace IpJournal.DataAccess;
 
-public class IPAdressFileRepository : IIPAddressRepository
+public class IPAddressFileRepository : IIPAddressRepository
 {
     private readonly IConfiguration _config;
     private string FileName
@@ -15,7 +15,7 @@ public class IPAdressFileRepository : IIPAddressRepository
         }
     }
 
-    public IPAdressFileRepository(IConfiguration config)
+    public IPAddressFileRepository(IConfiguration config)
     {
         _config = config;
     }
