@@ -4,7 +4,7 @@ namespace IpJournal.Core.Filter;
 
 public class RequestLogsFilter : IRequestLogsFilter
 {
-    private List<FilterCb> _filterCbs = [];
+    public List<FilterCb> _filterCbs = [];
 
     public RequestLogsFilter(params FilterCb[] filterCbs)
     {
@@ -15,8 +15,13 @@ public class RequestLogsFilter : IRequestLogsFilter
     {
     }
 
+    public IReadOnlyList<FilterCb> FilterCbs { get { return _filterCbs; } }
+
     public IEnumerable<RequestLog> Filter(IEnumerable<RequestLog> requestLogs, FilterOptions filterOptions)
     {
+        ArgumentNullException.ThrowIfNull(requestLogs);
+        ArgumentNullException.ThrowIfNull(filterOptions);
+
         return requestLogs.Where(requestLog => Passes(requestLog, filterOptions));
     }
 
